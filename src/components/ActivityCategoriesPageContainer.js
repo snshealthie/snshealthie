@@ -12,33 +12,41 @@ import CreateClassFormModal from "./CreateClassFormModal"
 import CreateReviewFormModal from "./CreateReviewFormModal"
 import {activityCategories} from "../constants/ActivityCategories";
 import {
-    APIErrorMessage, APISuccessMessage
+    APIErrorMessage,
+    APISuccessMessage,
 } from "./ResponseMessages";
+import {randomColor} from "../constants/Colors"
 
 export default class ActivityCategoriesContainer extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             selectedCategory: "",
+            selectedCategoryText: "",  // casing issue. values are lowercase but need a human readable version, so track two
+            hoveredCategory: "",
             initialSelectionMade: false,
             wasSuccessful: null,
             isLoading: false,
-            hovered: false,
+            color: randomColor(),
         }
 
         this.handleCategorySelect = this.handleCategorySelect.bind(this)
         this.handleAPIError = this.handleAPIError.bind(this)
         this.handleAPISuccess = this.handleAPISuccess.bind(this) //doesnt do anything
-        this.handleLoader = this.handleLoader.bind(this)
+        this.handleLoader = this.handleLoader.bind(this) //not being passed as props
+        this.handleMouseEnter = this.handleMouseEnter.bind(this)
+        this.handleMouseLeave = this.handleMouseLeave.bind(this)
     }
 
     handleCategorySelect(e) {
         e.preventDefault()
         this.setState({
             selectedCategory: e.target.getAttribute('data-value'),
+            selectedCategoryText: e.currentTarget.textContent,
             initialSelectionMade: true,
         })
+        this.resetColor()
     }
 
     handleAPIError() {
@@ -46,7 +54,6 @@ export default class ActivityCategoriesContainer extends React.Component {
             wasSuccessful: false,
         })
     }
-
 
     //not working?
     handleAPISuccess() {
@@ -65,38 +72,49 @@ export default class ActivityCategoriesContainer extends React.Component {
     }
 
     //unclear if we need this
-    handleMouseEnter() {
+    handleMouseEnter(e) {
         this.setState({
-            hovered:true,
+            hoveredCategory: e.target.getAttribute('data-value'),
         })
     }
 
-    handleMouseExit() {
+    handleMouseLeave() {
         this.setState({
-            hovered: true,
+            hoveredCategory: "",
         })
     }
 
+    resetColor(){
+        this.setState({
+            color: randomColor()
+        })
+    }
 
     render() {
 
-        return(
+        return (
 
-            <Container style={{margin: '5em'}}>
+            <Container style={{margin: "5em 0em"}}>
                 <ActivityCategoriesList
                     onCategorySelect={this.handleCategorySelect}
                     selectedCategory={this.state.selectedCategory}
                     activityCategories={activityCategories}
                     onMouseEnter={this.handleMouseEnter}
-                    onMouseExit={this.handleMouseExit}
+                    onMouseLeave={this.handleMouseLeave}
+                    color={this.state.color}
+                    hoveredCategory={this.state.hoveredCategory}
                 />
                 <Divider />
                 <CreateClassFormModal
                     selectedCategory={this.state.selectedCategory}
+                    selectedCategoryText={this.state.selectedCategoryText}
                     handleAPIError={this.handleAPIError}
                     handleAPISuccess={this.handleAPISuccess}
+                    color={this.state.color}
                 />
-                <CreateReviewFormModal/>
+                <CreateReviewFormModal
+                    color={this.state.color}
+                />
                 <Divider />
                 <Loader active={this.state.isLoading} />
                 <APIErrorMessage
@@ -105,11 +123,14 @@ export default class ActivityCategoriesContainer extends React.Component {
                     wasSuccessful={this.state.wasSuccessful} />
                 <ClassesList
                     selectedCategory={this.state.selectedCategory}
+                    selectedCategoryText={this.state.selectedCategoryText}
                     initialSelectionMade={this.state.initialSelectionMade}
                     handleAPIError={this.handleAPIError}
                     handleAPISuccess={this.handleAPISuccess}
                     handleLoader={this.handleLoader}
+                    color={this.state.color}
                 />
+
             </Container>
 
         )
