@@ -27,6 +27,7 @@ export default class CreateClassFormModal extends React.Component {
             return object
         }, {})
 
+
         this.state = {
             modalOpen: false,
             formContent: inputClassParameters,
@@ -143,11 +144,11 @@ export default class CreateClassFormModal extends React.Component {
         return(
 
             <Modal
-                trigger={<Button size="huge" disabled={this.props.selectedCategory === ""} primary onClick={this.handleOpen}>Create a New Class</Button>}
+                trigger={<Button size="huge" disabled={this.props.selectedCategory === ""} color={this.props.color} onClick={this.handleOpen}>Create a New Class</Button>}
                 open={this.state.modalOpen}
                 onClose={this.handleClose}
             >
-                <Modal.Header>Create a new {type} Class</Modal.Header>
+                <Modal.Header>Create a new {this.props.selectedCategoryText} Class</Modal.Header>
                 <Modal.Content>
                     <Container>
                         <Form>
@@ -230,7 +231,7 @@ export default class CreateClassFormModal extends React.Component {
                     </Container>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='blue'
+                    <Button color={this.props.color}
                             disabled={!isEnabled}
                             onClick={this.handleSubmit}>Create a Class</Button>
                 </Modal.Actions>

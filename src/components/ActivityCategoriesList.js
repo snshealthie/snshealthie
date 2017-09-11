@@ -7,17 +7,24 @@ export default class ActivityCategoriesList extends React.Component {
     render() {
 
         let category = this.props.activityCategories.map((category, index) =>
-            <Category text={category.text}
-                      key={index}
-                      value={category.value}
-                      onClick={this.props.onCategorySelect}
-                      isActive={this.props.selectedCategory === category.value}
-
+            <Category
+                text={category.text}
+                key={index}
+                value={category.value}
+                onClick={this.props.onCategorySelect}
+                isActive={this.props.selectedCategory === category.value}
+                onMouseEnter={this.props.onMouseEnter}
+                onMouseLeave={this.props.onMouseLeave}
+                color={this.props.color}
+                isHovered={this.props.hoveredCategory === category.value}
             />
         )
 
         return (
-            <Grid columns={5} doubling stackable>
+            <Grid
+                columns={5}
+                doubling stackable
+            >
                 {category}
             </Grid>
         )

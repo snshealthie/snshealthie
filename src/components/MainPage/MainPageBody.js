@@ -8,7 +8,7 @@ import {
     Statistic,
     Reveal,
 } from "semantic-ui-react"
-import { activityCategories } from "../constants/ActivityCategories";
+import { activityCategories } from "../../constants/ActivityCategories";
 
 export const MainPageBody = () => {
 

@@ -2,28 +2,55 @@ import React from 'react'
 import {
     Card,
     Rating,
+    Reveal,
 } from 'semantic-ui-react'
 
-const Class = (props) => {
+export class Class extends React.Component {
 
-    const results = props.data;
-    let classes = results.map((aclass) =>
-        <Card color="blue" key={aclass.id}>
-            <Card.Content>
-                <Card.Header>{aclass.name}</Card.Header>
-                <Card.Meta>{aclass.type}</Card.Meta>
-                <Card.Description>{aclass.description}</Card.Description>
-                <Card.Description extra>
-                    <Rating icon="heart" rating={aclass.rating} maxRating={5} disabled />
-                </Card.Description>
-            </Card.Content>
-        </Card>
-    );
+    constructor(props) {
+        super(props)
+        this.state = {
+            selectedClass: null,
+        }
 
-    return (
-        <div>{classes}</div>
-    );
+    }
+
+
+    render() {
+
+        return (
+
+            <Reveal animated="move" onClick={this.props.handleClassSelect}>
+                <Reveal.Content visible>
+
+                    <Card>
+                        <Card.Content>
+                            <Card.Header>{this.props.name}</Card.Header>
+                            <Card.Meta>{this.props.type}</Card.Meta>
+                            <Card.Description>{this.props.description}</Card.Description>
+                            <Card.Description extra>
+                                <Rating icon="heart" rating={this.props.rating} maxRating={5} disabled/>
+                            </Card.Description>
+                        </Card.Content>
+                    </Card>
+
+                </Reveal.Content>
+
+                <Reveal.Content hidden>
+
+                    <Card >
+                        <Card.Content>
+                            <Card.Header>{this.props.name}</Card.Header>
+                            <Card.Meta>{this.props.duration_minutes}</Card.Meta>
+                            <Card.Description>{this.props.instructor}</Card.Description>
+                            <Card.Description extra>
+                                {this.props.gym}
+                            </Card.Description>
+                        </Card.Content>
+                    </Card>
+
+                </Reveal.Content>
+            </Reveal>
+        )
+    }
 }
-
-export default Class
-

@@ -121,7 +121,7 @@ export default class CreateReviewFormModal extends React.Component {
         return (
 
             <Modal
-                trigger={<Button size="huge" primary onClick={this.handleOpen}>Create a New Review</Button>}
+                trigger={<Button size="huge" color={this.props.color} onClick={this.handleOpen}>Create a New Review</Button>}
                 open={this.state.modalOpen}
                 onClose={this.handleClose}
             >
@@ -182,7 +182,7 @@ export default class CreateReviewFormModal extends React.Component {
                 </Modal.Content>
                 <Modal.Actions>
                     <Button
-                        color='blue'
+                        color={this.props.color}
                         onClick={this.handleSubmit}
                         disabled={!isEnabled}
                     >

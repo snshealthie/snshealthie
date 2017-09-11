@@ -7,10 +7,18 @@ import {
 export const Category = (props) => (
 
     <Grid.Column>
-        <Segment data-value={props.value}
-                 color={props.isActive ? "blue" : null }
-                 textAlign="center"
-                 onClick={props.onClick}>{props.text}</Segment>
+        <Segment
+            padded
+            data-value={props.value}
+            inverted={!!props.isActive }
+            color={props.isActive || props.isHovered ? props.color : null }
+            textAlign="center"
+            onClick={props.onClick}
+            onMouseEnter={props.onMouseEnter}
+            onMouseLeave={props.onMouseLeave}
+        >
+            {props.text}
+        </Segment>
     </Grid.Column>
 
 )

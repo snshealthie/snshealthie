@@ -71,7 +71,6 @@ export default class ActivityCategoriesContainer extends React.Component {
         console.log(this.state.isLoading)
     }
 
-    //unclear if we need this
     handleMouseEnter(e) {
         this.setState({
             hoveredCategory: e.target.getAttribute('data-value'),
@@ -116,11 +115,14 @@ export default class ActivityCategoriesContainer extends React.Component {
                     color={this.state.color}
                 />
                 <Divider />
+
                 <Loader active={this.state.isLoading} />
+
                 <APIErrorMessage
                     wasSuccessful={this.state.wasSuccessful} />
                 <APISuccessMessage
                     wasSuccessful={this.state.wasSuccessful} />
+
                 <ClassesList
                     selectedCategory={this.state.selectedCategory}
                     selectedCategoryText={this.state.selectedCategoryText}
